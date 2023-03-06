@@ -13,27 +13,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.quizgame.data.Questions
+import com.example.quizgame.data.UiState
 import com.example.quizgame.data.questions
 import com.example.quizgame.ui.theme.Secondary
 import com.example.quizgame.ui.theme.background
 import com.example.quizgame.ui.theme.buttonColor
+import java.util.Random
 
 @Composable
 fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewModel(), onCorrectAnswer: () -> Unit) {
-    var randomQuestions by remember {
+    var randomQuestion by remember {
         mutableStateOf(questions.random())
     }
     var answer1 by remember {
-        mutableStateOf(randomQuestions.answer1)
+        mutableStateOf(randomQuestion.answer1)
     }
     var answer2 by remember {
-        mutableStateOf(randomQuestions.answer2)
+        mutableStateOf(randomQuestion.answer2)
     }
     var answer3 by remember {
-        mutableStateOf(randomQuestions.answer3)
+        mutableStateOf(randomQuestion.answer3)
     }
     var answer4 by remember {
-        mutableStateOf(randomQuestions.answer4)
+        mutableStateOf(randomQuestion.answer4)
     }
     var countWords by remember {
         mutableStateOf(0)
@@ -50,25 +53,25 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(elevation = 20.dp, backgroundColor = Secondary) {
-            Text(text = randomQuestions.question, color = Color.Black, fontSize = 30.sp)
+            Text(text = randomQuestion.question, color = Color.Black, fontSize = 30.sp)
         }
         Spacer(modifier = Modifier.height(30.dp))
         options.forEach { item ->
             Button(
                 onClick = {
                     selectedValue = item
-                    if (selectedValue == randomQuestions.correctAnswer) {
+                    if (selectedValue == randomQuestion.correctAnswer) {
                          onCorrectAnswer()
                         countWords ++
                         if (countWords == 10) {
                             AfterTenTimes()
                         }
                         else{
-                            randomQuestions = questions.random()
-                            answer1 = randomQuestions.answer1
-                            answer2 = randomQuestions.answer2
-                            answer3 = randomQuestions.answer3
-                            answer4 = randomQuestions.answer4
+                            randomQuestion = viewModel.makeRandomQuestion(randomQuestion)
+                            answer1 = randomQuestion.answer1
+                            answer2 = randomQuestion.answer2
+                            answer3 = randomQuestion.answer3
+                            answer4 = randomQuestion.answer4
                             options = listOf(answer1, answer2, answer3, answer4)
 
                         }
@@ -79,11 +82,11 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
                             AfterTenTimes()
                         }
                         else{
-                            randomQuestions = questions.random()
-                            answer1 = randomQuestions.answer1
-                            answer2 = randomQuestions.answer2
-                            answer3 = randomQuestions.answer3
-                            answer4 = randomQuestions.answer4
+                            randomQuestion = viewModel.makeRandomQuestion(randomQuestion)
+                            answer1 = randomQuestion.answer1
+                            answer2 = randomQuestion.answer2
+                            answer3 = randomQuestion.answer3
+                            answer4 = randomQuestion.answer4
                             options =listOf(answer1, answer2, answer3, answer4)
                         }
                     }
@@ -98,9 +101,4 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
             Spacer(modifier = Modifier.height(20.dp))
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun preview() {
 }
