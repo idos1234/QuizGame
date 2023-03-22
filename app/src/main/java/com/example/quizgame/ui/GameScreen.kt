@@ -9,6 +9,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,10 +27,16 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
         else -> 70.sp
     }
     val ButtonTextSize: TextUnit = when (windowSize) {
-        WindowWidthSizeClass.Compact -> 20.sp
-        WindowWidthSizeClass.Medium -> 30.sp
-        WindowWidthSizeClass.Expanded -> 95.sp
-        else -> 70.sp
+        WindowWidthSizeClass.Compact -> 25.sp
+        WindowWidthSizeClass.Medium -> 35.sp
+        WindowWidthSizeClass.Expanded -> 50.sp
+        else -> 50.sp
+    }
+    val ButtonHeight: Dp = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 50.dp
+        WindowWidthSizeClass.Medium -> 70.dp
+        WindowWidthSizeClass.Expanded -> 80.dp
+        else -> 80.dp
     }
 
     var randomQuestion by remember {
@@ -62,11 +69,11 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(elevation = 20.dp, backgroundColor = Secondary) {
-            Text(text = randomQuestion.question, color = Color.Black, fontSize = textSize)
+            Text(text = randomQuestion.question, color = Color.Black, fontSize = textSize,  modifier = Modifier.padding(10.dp))
         }
         Spacer(modifier = Modifier.height(30.dp))
         options.forEach { item ->
-            Row(modifier = Modifier.weight(2f)) {
+            Row() {
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
                     onClick = {
@@ -101,14 +108,14 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
                     },
                     colors = ButtonDefaults.buttonColors(buttonColor),
                     modifier = Modifier
-                        .width(200.dp)
-                        .height(50.dp)
+                        .height(ButtonHeight)
                         .weight(6f)
                 ) {
                     Text(item, fontSize = ButtonTextSize)
                 }
+                Spacer(modifier = Modifier.weight(1f))
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(ButtonHeight/2))
         }
     }
 }
