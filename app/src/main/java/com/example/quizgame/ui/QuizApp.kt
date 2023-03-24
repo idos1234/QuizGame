@@ -43,7 +43,7 @@ fun QuizApp(
             )
         }
         composable(route = ScreensNav.Final.name) {
-            finalScore(score = score )
+            finalScore(score = score, windowSize = windowSize)
         }
     }
 }

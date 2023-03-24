@@ -3,17 +3,20 @@ package com.example.quizgame.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quizgame.ui.theme.Shapes
 
 @Composable
-fun finalScore(score: Int) {
+fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeClass.Compact) {
 
     val color: Color = when(score) {
         1 -> com.example.quizgame.ui.theme.score_1
@@ -40,79 +43,108 @@ fun finalScore(score: Int) {
         8 -> "Very Good"
         9 -> "Great"
         10 -> "excellent!"
-        else -> {""}
+        else -> {"Worst"}
+    }
+
+    val TitleSize: TextUnit = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 60.sp
+        WindowWidthSizeClass.Medium -> 90.sp
+        WindowWidthSizeClass.Expanded -> 90.sp
+        else -> 90.sp
+    }
+
+    val textSize: TextUnit = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 80.sp
+        WindowWidthSizeClass.Medium -> 100.sp
+        WindowWidthSizeClass.Expanded -> 110.sp
+        else -> 110.sp
+    }
+
+    val ButtonSize: Dp = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 300.dp
+        WindowWidthSizeClass.Medium -> 400.dp
+        WindowWidthSizeClass.Expanded -> 450.dp
+        else -> 450.dp
     }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Your score is:", fontSize = 60.sp)
-            Spacer(modifier = Modifier.height(20.dp))
-            Card(shape = Shapes.large, backgroundColor = color, modifier = Modifier.size(200.dp)) {
+            Text("Your score is:", fontSize = TitleSize)
+            Spacer(modifier = Modifier.weight(2f))
+            Card(shape = Shapes.large, backgroundColor = color, modifier = Modifier.size(ButtonSize)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "${score}/10", color = Color.Black, fontSize = 50.sp)
-                    Text(text = text, color = Color.Black, fontSize = 40.sp)
+                    Text(text = "${score}/10", color = Color.Black, fontSize = textSize, modifier = Modifier.weight(1f))
+                    Text(text = text, color = Color.Black, fontSize = textSize, modifier = Modifier.weight(1f))
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
+            Spacer(modifier = Modifier.weight(2f))
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview1() {
+fun Finalscorepreview0() {
+    finalScore(score = 0)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Finalscorepreview1() {
     finalScore(score = 1)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview2() {
+fun Finalscorepreview2() {
     finalScore(score = 2)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview3() {
+fun Finalscorepreview3() {
     finalScore(score = 3)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview4() {
+fun Finalscorepreview4() {
     finalScore(score = 4)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview5() {
+fun Finalscorepreview5() {
     finalScore(score = 5)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview6() {
+fun Finalscorepreview6() {
     finalScore(score = 6)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview7() {
+fun Finalscorepreview7() {
     finalScore(score = 7)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview8() {
+fun Finalscorepreview8() {
     finalScore(score = 8)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview9() {
+fun Finalscorepreview9() {
     finalScore(score = 9)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun finalscorepreview10() {
+fun Finalscorepreview10() {
     finalScore(score = 10)
 }
