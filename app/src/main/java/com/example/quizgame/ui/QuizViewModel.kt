@@ -1,10 +1,11 @@
 package com.example.quizgame.ui
 
+import androidx.lifecycle.ViewModel
 import com.example.quizgame.data.Questions
 import com.example.quizgame.data.questions
 
-class QuizViewModel {
-    private var usedWords: MutableList<Questions> = mutableListOf()
+class QuizViewModel: ViewModel() {
+    var usedWords: MutableList<Questions> = mutableListOf()
 
 
 

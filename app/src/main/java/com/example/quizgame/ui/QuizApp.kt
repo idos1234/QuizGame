@@ -3,10 +3,13 @@ package com.example.quizgame.ui
 import android.annotation.SuppressLint
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.*
+
 
 enum class ScreensNav() {
     Start(),
@@ -18,7 +21,8 @@ enum class ScreensNav() {
 @Composable
 fun QuizApp(
     windowSize: WindowWidthSizeClass,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    viewModel: QuizViewModel = viewModel()
 ) {
     var score by remember {
         mutableStateOf(0)
@@ -35,6 +39,7 @@ fun QuizApp(
         }
         composable(route = ScreensNav.Quiz.name) {
             GameScreen(
+                viewModel = viewModel,
                 AfterTenTimes = {
                 navController.navigate(ScreensNav.Final.name)
             },
@@ -43,7 +48,12 @@ fun QuizApp(
             )
         }
         composable(route = ScreensNav.Final.name) {
-            finalScore(score = score, windowSize = windowSize)
+            finalScore(
+                score = score,
+                windowSize = windowSize,
+                onPlayAgain = {
+                navController.navigate((ScreensNav.Quiz.name))},
+                nullifyScore = {score = 0})
         }
     }
 }

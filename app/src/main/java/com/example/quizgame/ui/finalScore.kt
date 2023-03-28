@@ -1,6 +1,8 @@
 package com.example.quizgame.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -8,15 +10,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quizgame.ui.theme.Shapes
+import com.example.quizgame.ui.theme.buttonColor
+import java.util.*
+import kotlin.concurrent.schedule
 
 @Composable
-fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeClass.Compact) {
+fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeClass.Compact, onPlayAgain: () -> Unit = {}, nullifyScore: () -> Unit = {}) {
 
     val color: Color = when(score) {
         1 -> com.example.quizgame.ui.theme.score_1
@@ -54,24 +60,37 @@ fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeCla
     }
 
     val textSize: TextUnit = when (windowSize) {
-        WindowWidthSizeClass.Compact -> 80.sp
+        WindowWidthSizeClass.Compact -> 64.sp
         WindowWidthSizeClass.Medium -> 100.sp
         WindowWidthSizeClass.Expanded -> 110.sp
         else -> 110.sp
     }
 
-    val ButtonSize: Dp = when (windowSize) {
+    val CardSize: Dp = when (windowSize) {
         WindowWidthSizeClass.Compact -> 300.dp
         WindowWidthSizeClass.Medium -> 400.dp
         WindowWidthSizeClass.Expanded -> 450.dp
         else -> 450.dp
     }
 
+    val ButtonTextSize: TextUnit = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 18.sp
+        WindowWidthSizeClass.Medium -> 35.sp
+        WindowWidthSizeClass.Expanded -> 50.sp
+        else -> 50.sp
+    }
+    val ButtonHeight: Dp = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 50.dp
+        WindowWidthSizeClass.Medium -> 70.dp
+        WindowWidthSizeClass.Expanded -> 80.dp
+        else -> 80.dp
+    }
+
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text("Your score is:", fontSize = TitleSize)
             Spacer(modifier = Modifier.weight(2f))
-            Card(shape = Shapes.large, backgroundColor = color, modifier = Modifier.size(ButtonSize)) {
+            Card(shape = Shapes.large, backgroundColor = color, modifier = Modifier.size(CardSize)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = "${score}/10", color = Color.Black, fontSize = textSize, modifier = Modifier.weight(1f))
                     Text(text = text, color = Color.Black, fontSize = textSize, modifier = Modifier.weight(1f))
@@ -79,6 +98,34 @@ fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeCla
                 }
             }
             Spacer(modifier = Modifier.weight(2f))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Button(
+                    onClick =
+                    {
+                        onPlayAgain()
+                        Timer().schedule(500) {nullifyScore()}
+                    },
+                    colors = ButtonDefaults.buttonColors(buttonColor),
+                    modifier = Modifier
+                        .height(ButtonHeight)
+                        .weight(1f))
+                {
+                    Text(text = "Play Again", fontSize = ButtonTextSize, fontWeight = FontWeight.Bold)
+                }
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                Button(
+                    onClick = {System.exit(0)},
+                    colors = ButtonDefaults.buttonColors(buttonColor),
+                    modifier = Modifier
+                        .height(ButtonHeight)
+                        .weight(1f))
+                {
+                    Text(text = "Quit App", fontSize = ButtonTextSize, fontWeight = FontWeight.Bold)
+                }
+            }
+            Spacer(modifier = Modifier.weight(0.5f))
         }
     }
 }

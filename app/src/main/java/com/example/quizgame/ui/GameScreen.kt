@@ -13,13 +13,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.quizgame.data.questions
 import com.example.quizgame.ui.theme.Secondary
 import com.example.quizgame.ui.theme.background
 import com.example.quizgame.ui.theme.buttonColor
 
 @Composable
-fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewModel(), onCorrectAnswer: () -> Unit, windowSize: WindowWidthSizeClass) {
+fun GameScreen(viewModel: QuizViewModel = viewModel(), AfterTenTimes: () -> Unit, onCorrectAnswer: () -> Unit, windowSize: WindowWidthSizeClass) {
     val textSize: TextUnit = when (windowSize) {
         WindowWidthSizeClass.Compact -> 30.sp
         WindowWidthSizeClass.Medium -> 50.sp
@@ -82,6 +83,7 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
                             onCorrectAnswer()
                             countWords++
                             if (countWords == 10) {
+                                viewModel.usedWords = mutableListOf()
                                 AfterTenTimes()
                             } else {
                                 randomQuestion = viewModel.makeRandomQuestion(randomQuestion)
@@ -95,6 +97,7 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
                         } else {
                             countWords++
                             if (countWords == 10) {
+                                viewModel.usedWords = mutableListOf()
                                 AfterTenTimes()
                             } else {
                                 randomQuestion = viewModel.makeRandomQuestion(randomQuestion)
@@ -103,6 +106,7 @@ fun GameScreen(AfterTenTimes: () -> Unit, viewModel: QuizViewModel = QuizViewMod
                                 answer3 = randomQuestion.answer3
                                 answer4 = randomQuestion.answer4
                                 options = listOf(answer1, answer2, answer3, answer4)
+
                             }
                         }
                     },
