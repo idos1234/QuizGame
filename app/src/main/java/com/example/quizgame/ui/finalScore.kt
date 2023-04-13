@@ -22,7 +22,7 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 @Composable
-fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeClass.Compact, onPlayAgain: () -> Unit = {}, nullifyScore: () -> Unit = {}) {
+fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeClass.Compact, onPlayAgain: () -> Unit = {}, nullifyScore: () -> Unit = {}, nullifyQuestions: () -> Unit = {}) {
 
     val color: Color = when(score) {
         1 -> com.example.quizgame.ui.theme.score_1
@@ -103,6 +103,7 @@ fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeCla
                     onClick =
                     {
                         onPlayAgain()
+                        Timer().schedule(100) {nullifyQuestions()}
                         Timer().schedule(500) {nullifyScore()}
                     },
                     colors = ButtonDefaults.buttonColors(buttonColor),

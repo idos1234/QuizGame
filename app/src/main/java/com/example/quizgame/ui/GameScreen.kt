@@ -20,7 +20,7 @@ import com.example.quizgame.ui.theme.background
 import com.example.quizgame.ui.theme.buttonColor
 
 @Composable
-fun GameScreen(viewModel: QuizViewModel = viewModel(), AfterTenTimes: () -> Unit, onCorrectAnswer: () -> Unit, windowSize: WindowWidthSizeClass) {
+fun GameScreen(viewModel: QuizViewModel = viewModel(), AfterTenTimes: () -> Unit, onCorrectAnswer: () -> Unit, windowSize: WindowWidthSizeClass, afterQuestions: () -> Unit = {}) {
     val textSize: TextUnit = when (windowSize) {
         WindowWidthSizeClass.Compact -> 30.sp
         WindowWidthSizeClass.Medium -> 50.sp
@@ -81,6 +81,7 @@ fun GameScreen(viewModel: QuizViewModel = viewModel(), AfterTenTimes: () -> Unit
                         selectedValue = item
                         if (selectedValue == randomQuestion.correctAnswer) {
                             onCorrectAnswer()
+                            afterQuestions()
                             countWords++
                             if (countWords == 10) {
                                 viewModel.usedWords = mutableListOf()
@@ -95,6 +96,7 @@ fun GameScreen(viewModel: QuizViewModel = viewModel(), AfterTenTimes: () -> Unit
 
                             }
                         } else {
+                            afterQuestions()
                             countWords++
                             if (countWords == 10) {
                                 viewModel.usedWords = mutableListOf()
