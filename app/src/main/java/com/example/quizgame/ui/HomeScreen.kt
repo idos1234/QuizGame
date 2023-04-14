@@ -35,7 +35,7 @@ fun HomeScreen(onClicked: () -> Unit = {}, windowSize: WindowWidthSizeClass = Wi
     }
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.weight(2f))
+        Spacer(modifier = Modifier.weight(1f))
         Row(modifier = Modifier.weight(3f)) {
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -60,7 +60,7 @@ fun HomeScreen(onClicked: () -> Unit = {}, windowSize: WindowWidthSizeClass = Wi
             }
             Spacer(modifier = Modifier.weight(1f))
         }
-        Spacer(modifier = Modifier.weight(6f))
+        Spacer(modifier = Modifier.weight(3f))
     }
 }
 

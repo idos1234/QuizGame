@@ -2,6 +2,8 @@ package com.example.quizgame.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val background = Color(0xFFBCEAF0)
+val topAppBarColor = Color(0xFF001461)
 val Primary = Color(0xFF00004B)
 val Secondary = Color(0xFF89D8E2)
 val buttonColor = Color(0xFFFF9800)
@@ -16,4 +18,3 @@ val score_8 = Color(0xFF8BC34A)
 val score_9 = Color(0xFF6BBE0B)
 val score_10 = Color(0xFF00FF0A)
 val Textcolor = Color(0xFFFFFFFF)
-val background = Color(0xFFBCEAF0)

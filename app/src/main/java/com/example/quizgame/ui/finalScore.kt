@@ -62,14 +62,14 @@ fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeCla
     val textSize: TextUnit = when (windowSize) {
         WindowWidthSizeClass.Compact -> 64.sp
         WindowWidthSizeClass.Medium -> 100.sp
-        WindowWidthSizeClass.Expanded -> 110.sp
+        WindowWidthSizeClass.Expanded -> 80.sp
         else -> 110.sp
     }
 
     val CardSize: Dp = when (windowSize) {
         WindowWidthSizeClass.Compact -> 300.dp
-        WindowWidthSizeClass.Medium -> 400.dp
-        WindowWidthSizeClass.Expanded -> 450.dp
+        WindowWidthSizeClass.Medium -> 350.dp
+        WindowWidthSizeClass.Expanded -> 400.dp
         else -> 450.dp
     }
 
@@ -88,12 +88,12 @@ fun finalScore(score: Int, windowSize: WindowWidthSizeClass = WindowWidthSizeCla
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Your score is:", fontSize = TitleSize)
+            Text("Your score is:", fontSize = TitleSize, color = Color.Black)
             Spacer(modifier = Modifier.weight(2f))
             Card(shape = Shapes.large, backgroundColor = color, modifier = Modifier.size(CardSize)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "${score}/10", color = Color.Black, fontSize = textSize, modifier = Modifier.weight(1f))
-                    Text(text = text, color = Color.Black, fontSize = textSize, modifier = Modifier.weight(1f))
+                    Text(text = "${score}/10", color = Color.Black, fontSize = textSize, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                    Text(text = text, color = Color.Black, fontSize = textSize, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }

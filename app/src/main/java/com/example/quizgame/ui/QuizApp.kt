@@ -1,12 +1,15 @@
 package com.example.quizgame.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import android.graphics.drawable.ColorDrawable
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -14,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.quizgame.ui.theme.buttonColor
 import kotlinx.coroutines.*
 
 
@@ -46,7 +50,8 @@ fun QuizApp(
         topBar = {
             QuizTopAppBar(
                 currentScreen = currentScreen,
-                countQuestions = countQuestions
+                countQuestions = countQuestions,
+                windowSize = windowSize
             )
         }
     ) {
@@ -89,14 +94,24 @@ fun QuizApp(
 fun QuizTopAppBar(
     currentScreen: ScreensNav,
     modifier: Modifier = Modifier,
+    windowSize: WindowWidthSizeClass,
     countQuestions: Int
 ) {
+
+    val barHeight: Dp = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 56.dp
+        WindowWidthSizeClass.Medium -> 70.dp
+        WindowWidthSizeClass.Expanded -> 80.dp
+        else -> 56.dp
+    }
+
     TopAppBar(
         title = {when(currentScreen) {
-            ScreensNav.Start -> Text("Quiz Game", fontSize = 20.sp)
-            ScreensNav.Quiz -> Text("Question: $countQuestions / 10", fontSize = 20.sp)
-            ScreensNav.Final -> Text("Final Score", fontSize = 20.sp)
+            ScreensNav.Start -> Text("Quiz Game", fontSize = 40.sp)
+            ScreensNav.Quiz -> Text("Question: ${countQuestions+1} / 10", fontSize = 35.sp)
+            ScreensNav.Final -> Text("Final Score", fontSize = 40.sp)
         } },
-        modifier = modifier
+        backgroundColor = com.example.quizgame.ui.theme.topAppBarColor,
+        modifier = modifier.height(barHeight)
     )
 }

@@ -30,13 +30,13 @@ fun GameScreen(viewModel: QuizViewModel = viewModel(), AfterTenTimes: () -> Unit
     val ButtonTextSize: TextUnit = when (windowSize) {
         WindowWidthSizeClass.Compact -> 25.sp
         WindowWidthSizeClass.Medium -> 35.sp
-        WindowWidthSizeClass.Expanded -> 50.sp
+        WindowWidthSizeClass.Expanded -> 45.sp
         else -> 50.sp
     }
     val ButtonHeight: Dp = when (windowSize) {
         WindowWidthSizeClass.Compact -> 50.dp
         WindowWidthSizeClass.Medium -> 70.dp
-        WindowWidthSizeClass.Expanded -> 80.dp
+        WindowWidthSizeClass.Expanded -> 68.dp
         else -> 80.dp
     }
 
@@ -64,15 +64,13 @@ fun GameScreen(viewModel: QuizViewModel = viewModel(), AfterTenTimes: () -> Unit
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
     Column(modifier = Modifier
-        .padding(16.dp)
-        .background(background)
-        .fillMaxSize(1f),
+        .fillMaxSize()
+        .background(background),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Card(elevation = 20.dp, backgroundColor = Secondary) {
+        Card(elevation = 20.dp, backgroundColor = Secondary, modifier = Modifier.padding(end = 20.dp, start = 20.dp, top = 20.dp, bottom = 30.dp)) {
             Text(text = randomQuestion.question, color = Color.Black, fontSize = textSize,  modifier = Modifier.padding(10.dp))
         }
-        Spacer(modifier = Modifier.height(30.dp))
         options.forEach { item ->
             Row() {
                 Spacer(modifier = Modifier.weight(1f))
@@ -113,6 +111,7 @@ fun GameScreen(viewModel: QuizViewModel = viewModel(), AfterTenTimes: () -> Unit
                         }
                     },
                     colors = ButtonDefaults.buttonColors(buttonColor),
+                    shape = com.example.quizgame.ui.theme.Shapes.medium,
                     modifier = Modifier
                         .height(ButtonHeight)
                         .weight(6f)
